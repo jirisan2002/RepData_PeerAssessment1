@@ -456,7 +456,7 @@ print(h)
 
 <h3>4.  Comparison of Activity Patterns between Weekdays and Weekends</h3>
 
-<pre><code class="r">## new data frame &#39;stepPerInterval&#39; splitted by &#39;interval&#39;
+<pre><code class="r">## new data frame stepPerInterval2 splitted by &#39;weekday&#39; &amp; &#39;interval&#39;
 stepsPerInterval2 &lt;- ddply(imputedwalk, .(weekday, interval), summarize, average = mean(steps, 
     na.rm = T))
 f &lt;- ggplot(stepsPerInterval2, aes(interval, average)) + geom_line()
