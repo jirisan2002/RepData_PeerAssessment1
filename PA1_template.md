@@ -10,26 +10,17 @@ library(xtable)
 
 Analyses of Daily Walking Activity of an Anonymous Individual
 ========================================================
-### Study Summary
+Small portable devices can be used to monitor and collect data on personal activites.  An individual's daily walking activity was monitored and collected using such a device, during the two month-period of October and November of 2012.  The number of steps per every 5-minute interval per day was monitored and collected.    
 
-- Use of small portable devices to collect data on personal activites
-- An individual's daily activity was monitored by counting the number of steps per every 5-minute interval per day
-
-### Goals of the Study
-
-1.  To manipulate this dataset to extract, summarize and present the statiscal summaries that are appropriate to our study questions.
-2.  To integrate the manipulation processes and the resulting summaries in an R markdown file to generate a document that complies lierate statistcal programming.   
+The purposes of this project are (1) to manipulate this dataset to extract, summarize and present the statiscal summaries that are appropriate to our study questions, and furthermore (2) to integrate the manipulation processes and the resulting summaries in an R markdown file in a way to generate a document that colplies lierate statistcal programming.   
 
 
 ### 1.  Mean Total Number of Steps per Day
 
-- Import the data and name it "walk" 
-- Add a new variable "weekday" (weekdays or weekend) based on the date. 
- 
-**Generation of histogram and summary table**
+The first thing to do is to load the data set ("activity.csv") and process the data for further analyses.  I imported the data and named it "walk" and added a new variable "weekday" for based on the date.  The "weekday" variable" would be useful for the later parts of this project.
 
-- **histogram** showing the distribution of total daily steps
-- **table** summarizing the daily walking activities
+
+To generate a **histogram** showing the distribution of total daily steps taken and a **table** summarizing the daily walking activities of the individual, I generated a new data frame **"summaryTable"**.  
 
 
 ```r
@@ -61,6 +52,8 @@ print(g)
 
 ![plot of chunk histogram](figure/histogram.png) 
 
+
+Here is the **Summary Table** showing the total steps, average steps per interval and medians per interval per day
 
 
 ```r
@@ -135,11 +128,7 @@ print(summaryTable, type = "html")
 
 ### 2.  Pattern of Average Walkign Activity 
 
-- Does this individual's walking activity show any kind of pattern?  
-1.  Split the "activity (walk)" dataset by the "interval" variable
-2.  Calculate the average steps for each 5-minute intervals
-
-- **Time-series plot** showing the average steps per intervals 
+The next question is whether this individual's walking activity shows any kind of pattern, i.e. whether it shows a daily cycle of high and low activities.  To accomplish this, the "activity (walk)" dataset was split by the "interval" variable and the average steps for each 5-minute time intervals were calculated.  The following figure shows the time-series plot of average steps taken. 
 
 
 ```r
@@ -166,18 +155,9 @@ print(g)
 naCount <- sum(is.na(walk$steps))
 ```
 
-- The "activity" data set has total **2304** missing values in the "steps" variable.  
-- The missing values were discrded in the above analyses.  
-- This process resulted in a very unlikely outcome 
-(For example 8 days with zero ealking activity)
+The "activity"" data set has total **2304** missing values in the "steps" variable.  These missing values were discrded in the above analyses.  This process resulted in a very unlikely outcome of having 8 days of no walking day (i.e. zero total steps, see the table above).  
 
-**Imputation method**
-- Split by "weekday"
-- Split by "interval"
-- Calculate the means per interval
-- Replace NAs with the means of the corresponding intervals 
-
-**I used ddply() function of the *plyr* package to split the data.  The replacena() function is introduced to replace na's**
+Assuming some degree of repeating patterns of personal activities based on working (weekdays)-nonworking (weekend) days and individual circadian cycle, my approach to resolve this issue is to replace the missing values with the average steps of each time interval after splitting the days to weekdays and weekends.  I used ddply() function of the *plyr* package to split the data.  The replacena() function is introduced to replace na's with the mean steps of corresponding intervals of a day (weekday or weekend separatley).  
 
 
 ```r
@@ -194,9 +174,9 @@ summaryTable1 <- ddply(imputedwalk, c("date"), summarize, total = sum(steps,
     na.rm = T))
 ```
 
-- The resulting **histogram** and **Summary Table** are shown below.  
-- The number of days with < 2,000 steps went down from 10 to 2 days   
-- A noticeable change in the summary rable is in the median value.
+The resulting **histogram** and Here is a modified **Summary Table** are shown below.  The number of days with less than 2,000 steps went down from 10 days to 2 days after changing the data.  
+
+A noticeable change in the summary rable is in the median value.  The median steps were either 0 (for the days with at least one record for "steps") or NA (days with no record for "steps" variable).  However, the median values on the NA days were switched to non-zero values.
 
 
 ```r
