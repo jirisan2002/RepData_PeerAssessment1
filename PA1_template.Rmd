@@ -137,9 +137,9 @@ print(summaryTable1, type="html")
 ### 4.  Comparison of Activity Patterns between Weekdays and Weekends
 
 ```{r timeseries2, fig.height=6}
-## new data frame "stepPerInterval" splitted by "interval"
-stepsPerInterval2 <- ddply(imputedwalk, .(weekday,interval), summarize,
-     average=mean(steps, na.rm=T))
+## new data frame stepPerInterval2 splitted by "weekday" & "interval"
+stepsPerInterval2 <- ddply(imputedwalk, .(weekday, interval),
+     summarize, average=mean(steps, na.rm=T))
 f <- ggplot(stepsPerInterval2, aes(interval, average)) + geom_line()
 f <- f + facet_grid(weekday~.)
 f <- f + ggtitle("Avergae Steps per Interval (imputed)") +

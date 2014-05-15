@@ -10,17 +10,26 @@ library(xtable)
 
 Analyses of Daily Walking Activity of an Anonymous Individual
 ========================================================
-Small portable devices can be used to monitor and collect data on personal activites.  An individual's daily walking activity was monitored and collected using such a device, during the two month-period of October and November of 2012.  The number of steps per every 5-minute interval per day was monitored and collected.    
+### Study Summary
 
-The purposes of this project are (1) to manipulate this dataset to extract, summarize and present the statiscal summaries that are appropriate to our study questions, and furthermore (2) to integrate the manipulation processes and the resulting summaries in an R markdown file in a way to generate a document that colplies lierate statistcal programming.   
+- Use of small portable devices to collect data on personal activites
+- An individual's daily activity was monitored by counting the number of steps per every 5-minute interval per day
+
+### Goals of the Study
+
+1.  To manipulate this dataset to extract, summarize and present the statiscal summaries that are appropriate to our study questions.
+2.  To integrate the manipulation processes and the resulting summaries in an R markdown file to generate a document that complies lierate statistcal programming.   
 
 
 ### 1.  Mean Total Number of Steps per Day
 
-The first thing to do is to load the data set ("activity.csv") and process the data for further analyses.  I imported the data and named it "walk" and added a new variable "weekday" for based on the date.  The "weekday" variable" would be useful for the later parts of this project.
+- Import the data and name it "walk" 
+- Add a new variable "weekday" (weekdays or weekend) based on the date. 
+ 
+**Generation of histogram and summary table**
 
-
-To generate a **histogram** showing the distribution of total daily steps taken and a **table** summarizing the daily walking activities of the individual, I generated a new data frame **"summaryTable"**.  
+- **histogram** showing the distribution of total daily steps
+- **table** summarizing the daily walking activities
 
 
 ```r
@@ -53,8 +62,6 @@ print(g)
 ![plot of chunk histogram](figure/histogram.png) 
 
 
-Here is the **Summary Table** showing the total steps, average steps per interval and medians per interval per day
-
 
 ```r
 print(summaryTable, type = "html")
@@ -62,73 +69,77 @@ print(summaryTable, type = "html")
 
 ```
 ##          date total average median
-## 1   10/1/2012     0       0     NA
-## 2  10/10/2012  9900      34      0
-## 3  10/11/2012 10304      36      0
-## 4  10/12/2012 17382      60      0
-## 5  10/13/2012 12426      43      0
-## 6  10/14/2012 15098      52      0
-## 7  10/15/2012 10139      35      0
-## 8  10/16/2012 15084      52      0
-## 9  10/17/2012 13452      47      0
-## 10 10/18/2012 10056      35      0
-## 11 10/19/2012 11829      41      0
-## 12  10/2/2012   126       0      0
-## 13 10/20/2012 10395      36      0
-## 14 10/21/2012  8821      31      0
-## 15 10/22/2012 13460      47      0
-## 16 10/23/2012  8918      31      0
-## 17 10/24/2012  8355      29      0
-## 18 10/25/2012  2492       9      0
-## 19 10/26/2012  6778      24      0
-## 20 10/27/2012 10119      35      0
-## 21 10/28/2012 11458      40      0
-## 22 10/29/2012  5018      17      0
-## 23  10/3/2012 11352      39      0
-## 24 10/30/2012  9819      34      0
-## 25 10/31/2012 15414      54      0
-## 26  10/4/2012 12116      42      0
-## 27  10/5/2012 13294      46      0
-## 28  10/6/2012 15420      54      0
-## 29  10/7/2012 11015      38      0
-## 30  10/8/2012     0       0     NA
-## 31  10/9/2012 12811      44      0
-## 32  11/1/2012     0       0     NA
-## 33 11/10/2012     0       0     NA
-## 34 11/11/2012 12608      44      0
-## 35 11/12/2012 10765      37      0
-## 36 11/13/2012  7336      25      0
-## 37 11/14/2012     0       0     NA
-## 38 11/15/2012    41       0      0
-## 39 11/16/2012  5441      19      0
-## 40 11/17/2012 14339      50      0
-## 41 11/18/2012 15110      52      0
-## 42 11/19/2012  8841      31      0
-## 43  11/2/2012 10600      37      0
-## 44 11/20/2012  4472      16      0
-## 45 11/21/2012 12787      44      0
-## 46 11/22/2012 20427      71      0
-## 47 11/23/2012 21194      74      0
-## 48 11/24/2012 14478      50      0
-## 49 11/25/2012 11834      41      0
-## 50 11/26/2012 11162      39      0
-## 51 11/27/2012 13646      47      0
-## 52 11/28/2012 10183      35      0
-## 53 11/29/2012  7047      24      0
-## 54  11/3/2012 10571      37      0
-## 55 11/30/2012     0       0     NA
-## 56  11/4/2012     0       0     NA
-## 57  11/5/2012 10439      36      0
-## 58  11/6/2012  8334      29      0
-## 59  11/7/2012 12883      45      0
-## 60  11/8/2012  3219      11      0
-## 61  11/9/2012     0       0     NA
+## 1  2012-10-01     0       0     NA
+## 2  2012-10-02   126       0      0
+## 3  2012-10-03 11352      39      0
+## 4  2012-10-04 12116      42      0
+## 5  2012-10-05 13294      46      0
+## 6  2012-10-06 15420      54      0
+## 7  2012-10-07 11015      38      0
+## 8  2012-10-08     0       0     NA
+## 9  2012-10-09 12811      44      0
+## 10 2012-10-10  9900      34      0
+## 11 2012-10-11 10304      36      0
+## 12 2012-10-12 17382      60      0
+## 13 2012-10-13 12426      43      0
+## 14 2012-10-14 15098      52      0
+## 15 2012-10-15 10139      35      0
+## 16 2012-10-16 15084      52      0
+## 17 2012-10-17 13452      47      0
+## 18 2012-10-18 10056      35      0
+## 19 2012-10-19 11829      41      0
+## 20 2012-10-20 10395      36      0
+## 21 2012-10-21  8821      31      0
+## 22 2012-10-22 13460      47      0
+## 23 2012-10-23  8918      31      0
+## 24 2012-10-24  8355      29      0
+## 25 2012-10-25  2492       9      0
+## 26 2012-10-26  6778      24      0
+## 27 2012-10-27 10119      35      0
+## 28 2012-10-28 11458      40      0
+## 29 2012-10-29  5018      17      0
+## 30 2012-10-30  9819      34      0
+## 31 2012-10-31 15414      54      0
+## 32 2012-11-01     0       0     NA
+## 33 2012-11-02 10600      37      0
+## 34 2012-11-03 10571      37      0
+## 35 2012-11-04     0       0     NA
+## 36 2012-11-05 10439      36      0
+## 37 2012-11-06  8334      29      0
+## 38 2012-11-07 12883      45      0
+## 39 2012-11-08  3219      11      0
+## 40 2012-11-09     0       0     NA
+## 41 2012-11-10     0       0     NA
+## 42 2012-11-11 12608      44      0
+## 43 2012-11-12 10765      37      0
+## 44 2012-11-13  7336      25      0
+## 45 2012-11-14     0       0     NA
+## 46 2012-11-15    41       0      0
+## 47 2012-11-16  5441      19      0
+## 48 2012-11-17 14339      50      0
+## 49 2012-11-18 15110      52      0
+## 50 2012-11-19  8841      31      0
+## 51 2012-11-20  4472      16      0
+## 52 2012-11-21 12787      44      0
+## 53 2012-11-22 20427      71      0
+## 54 2012-11-23 21194      74      0
+## 55 2012-11-24 14478      50      0
+## 56 2012-11-25 11834      41      0
+## 57 2012-11-26 11162      39      0
+## 58 2012-11-27 13646      47      0
+## 59 2012-11-28 10183      35      0
+## 60 2012-11-29  7047      24      0
+## 61 2012-11-30     0       0     NA
 ```
 
 
 ### 2.  Pattern of Average Walkign Activity 
 
-The next question is whether this individual's walking activity shows any kind of pattern, i.e. whether it shows a daily cycle of high and low activities.  To accomplish this, the "activity (walk)" dataset was split by the "interval" variable and the average steps for each 5-minute time intervals were calculated.  The following figure shows the time-series plot of average steps taken. 
+- Does this individual's walking activity show any kind of pattern?  
+1.  Split the "activity (walk)" dataset by the "interval" variable
+2.  Calculate the average steps for each 5-minute intervals
+
+- **Time-series plot** showing the average steps per intervals 
 
 
 ```r
@@ -155,9 +166,18 @@ print(g)
 naCount <- sum(is.na(walk$steps))
 ```
 
-The "activity"" data set has total **2304** missing values in the "steps" variable.  These missing values were discrded in the above analyses.  This process resulted in a very unlikely outcome of having 8 days of no walking day (i.e. zero total steps, see the table above).  
+- The "activity" data set has total **2304** missing values in the "steps" variable.  
+- The missing values were discrded in the above analyses.  
+- This process resulted in a very unlikely outcome 
+(For example 8 days with zero ealking activity)
 
-Assuming some degree of repeating patterns of personal activities based on working (weekdays)-nonworking (weekend) days and individual circadian cycle, my approach to resolve this issue is to replace the missing values with the average steps of each time interval after splitting the days to weekdays and weekends.  I used ddply() function of the *plyr* package to split the data.  The replacena() function is introduced to replace na's with the mean steps of corresponding intervals of a day (weekday or weekend separatley).  
+**Imputation method**
+- Split by "weekday"
+- Split by "interval"
+- Calculate the means per interval
+- Replace NAs with the means of the corresponding intervals 
+
+**I used ddply() function of the *plyr* package to split the data.  The replacena() function is introduced to replace na's**
 
 
 ```r
@@ -174,9 +194,9 @@ summaryTable1 <- ddply(imputedwalk, c("date"), summarize, total = sum(steps,
     na.rm = T))
 ```
 
-The resulting **histogram** and Here is a modified **Summary Table** are shown below.  The number of days with less than 2,000 steps went down from 10 days to 2 days after changing the data.  
-
-A noticeable change in the summary rable is in the median value.  The median steps were either 0 (for the days with at least one record for "steps") or NA (days with no record for "steps" variable).  However, the median values on the NA days were switched to non-zero values.
+- The resulting **histogram** and **Summary Table** are shown below.  
+- The number of days with < 2,000 steps went down from 10 to 2 days   
+- A noticeable change in the summary rable is in the median value.
 
 
 ```r
@@ -196,67 +216,67 @@ print(summaryTable1, type = "html")
 
 ```
 ##          date total average median
-## 1   10/1/2012 10176      35     24
-## 2  10/10/2012  9900      34      0
-## 3  10/11/2012 10304      36      0
-## 4  10/12/2012 17382      60      0
-## 5  10/13/2012 12426      43      0
-## 6  10/14/2012 15098      52      0
-## 7  10/15/2012 10139      35      0
-## 8  10/16/2012 15084      52      0
-## 9  10/17/2012 13452      47      0
-## 10 10/18/2012 10056      35      0
-## 11 10/19/2012 11829      41      0
-## 12  10/2/2012   126       0      0
-## 13 10/20/2012 10395      36      0
-## 14 10/21/2012  8821      31      0
-## 15 10/22/2012 13460      47      0
-## 16 10/23/2012  8918      31      0
-## 17 10/24/2012  8355      29      0
-## 18 10/25/2012  2492       9      0
-## 19 10/26/2012  6778      24      0
-## 20 10/27/2012 10119      35      0
-## 21 10/28/2012 11458      40      0
-## 22 10/29/2012  5018      17      0
-## 23  10/3/2012 11352      39      0
-## 24 10/30/2012  9819      34      0
-## 25 10/31/2012 15414      54      0
-## 26  10/4/2012 12116      42      0
-## 27  10/5/2012 13294      46      0
-## 28  10/6/2012 15420      54      0
-## 29  10/7/2012 11015      38      0
-## 30  10/8/2012 10176      35     24
-## 31  10/9/2012 12811      44      0
-## 32  11/1/2012 10176      35     24
-## 33 11/10/2012 12406      43     32
-## 34 11/11/2012 12608      44      0
-## 35 11/12/2012 10765      37      0
-## 36 11/13/2012  7336      25      0
-## 37 11/14/2012 10176      35     24
-## 38 11/15/2012    41       0      0
-## 39 11/16/2012  5441      19      0
-## 40 11/17/2012 14339      50      0
-## 41 11/18/2012 15110      52      0
-## 42 11/19/2012  8841      31      0
-## 43  11/2/2012 10600      37      0
-## 44 11/20/2012  4472      16      0
-## 45 11/21/2012 12787      44      0
-## 46 11/22/2012 20427      71      0
-## 47 11/23/2012 21194      74      0
-## 48 11/24/2012 14478      50      0
-## 49 11/25/2012 11834      41      0
-## 50 11/26/2012 11162      39      0
-## 51 11/27/2012 13646      47      0
-## 52 11/28/2012 10183      35      0
-## 53 11/29/2012  7047      24      0
-## 54  11/3/2012 10571      37      0
-## 55 11/30/2012 10176      35     24
-## 56  11/4/2012 12406      43     32
-## 57  11/5/2012 10439      36      0
-## 58  11/6/2012  8334      29      0
-## 59  11/7/2012 12883      45      0
-## 60  11/8/2012  3219      11      0
-## 61  11/9/2012 10176      35     24
+## 1  2012-10-01 10762      37   34.5
+## 2  2012-10-02   126       0    0.0
+## 3  2012-10-03 11352      39    0.0
+## 4  2012-10-04 12116      42    0.0
+## 5  2012-10-05 13294      46    0.0
+## 6  2012-10-06 15420      54    0.0
+## 7  2012-10-07 11015      38    0.0
+## 8  2012-10-08 10762      37   34.5
+## 9  2012-10-09 12811      44    0.0
+## 10 2012-10-10  9900      34    0.0
+## 11 2012-10-11 10304      36    0.0
+## 12 2012-10-12 17382      60    0.0
+## 13 2012-10-13 12426      43    0.0
+## 14 2012-10-14 15098      52    0.0
+## 15 2012-10-15 10139      35    0.0
+## 16 2012-10-16 15084      52    0.0
+## 17 2012-10-17 13452      47    0.0
+## 18 2012-10-18 10056      35    0.0
+## 19 2012-10-19 11829      41    0.0
+## 20 2012-10-20 10395      36    0.0
+## 21 2012-10-21  8821      31    0.0
+## 22 2012-10-22 13460      47    0.0
+## 23 2012-10-23  8918      31    0.0
+## 24 2012-10-24  8355      29    0.0
+## 25 2012-10-25  2492       9    0.0
+## 26 2012-10-26  6778      24    0.0
+## 27 2012-10-27 10119      35    0.0
+## 28 2012-10-28 11458      40    0.0
+## 29 2012-10-29  5018      17    0.0
+## 30 2012-10-30  9819      34    0.0
+## 31 2012-10-31 15414      54    0.0
+## 32 2012-11-01 10762      37   34.5
+## 33 2012-11-02 10600      37    0.0
+## 34 2012-11-03 10571      37    0.0
+## 35 2012-11-04 10762      37   34.5
+## 36 2012-11-05 10439      36    0.0
+## 37 2012-11-06  8334      29    0.0
+## 38 2012-11-07 12883      45    0.0
+## 39 2012-11-08  3219      11    0.0
+## 40 2012-11-09 10762      37   34.5
+## 41 2012-11-10 10762      37   34.5
+## 42 2012-11-11 12608      44    0.0
+## 43 2012-11-12 10765      37    0.0
+## 44 2012-11-13  7336      25    0.0
+## 45 2012-11-14 10762      37   34.5
+## 46 2012-11-15    41       0    0.0
+## 47 2012-11-16  5441      19    0.0
+## 48 2012-11-17 14339      50    0.0
+## 49 2012-11-18 15110      52    0.0
+## 50 2012-11-19  8841      31    0.0
+## 51 2012-11-20  4472      16    0.0
+## 52 2012-11-21 12787      44    0.0
+## 53 2012-11-22 20427      71    0.0
+## 54 2012-11-23 21194      74    0.0
+## 55 2012-11-24 14478      50    0.0
+## 56 2012-11-25 11834      41    0.0
+## 57 2012-11-26 11162      39    0.0
+## 58 2012-11-27 13646      47    0.0
+## 59 2012-11-28 10183      35    0.0
+## 60 2012-11-29  7047      24    0.0
+## 61 2012-11-30 10762      37   34.5
 ```
 
 
@@ -264,7 +284,7 @@ print(summaryTable1, type = "html")
 
 
 ```r
-## new data frame 'stepPerInterval' splitted by 'interval'
+## new data frame stepPerInterval2 splitted by 'weekday' & 'interval'
 stepsPerInterval2 <- ddply(imputedwalk, .(weekday, interval), summarize, average = mean(steps, 
     na.rm = T))
 f <- ggplot(stepsPerInterval2, aes(interval, average)) + geom_line()
