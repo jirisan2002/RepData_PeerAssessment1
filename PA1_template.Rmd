@@ -1,20 +1,148 @@
-# Reproducible Research: Peer Assessment 1
+
+```{r setoptions}
+opts_chunk$set(echo=TRUE)
+##loading the necessary R packages
+library(plyr)
+library(ggplot2)
+library(xtable)
+```
+Analyses of Daily Walking Activity of an Anonymous Individual
+========================================================
+### Study Summary
+
+- Use of small portable devices to collect data on personal activites
+- An individual's daily activity was monitored by counting the number of steps per every 5-minute interval per day
+
+### Goals of the Study
+
+1.  To manipulate this dataset to extract, summarize and present the statiscal summaries that are appropriate to our study questions.
+2.  To integrate the manipulation processes and the resulting summaries in an R markdown file to generate a document that complies lierate statistcal programming.   
 
 
-## Loading and preprocessing the data
+### 1.  Mean Total Number of Steps per Day
 
+- Import the data and name it "walk" 
+- Add a new variable "weekday" (weekdays or weekend) based on the date. 
+ 
+**Generation of histogram and summary table**
 
+- **histogram** showing the distribution of total daily steps
+- **table** summarizing the daily walking activities
 
-## What is mean total number of steps taken per day?
+```{r histogram, fig.height = 4}
+#read the data frame "activity.csv" in the working directory
+walk <- read.csv("activity.csv")
 
+#add new varibale "weekday" and append
+weekday <- weekdays(as.Date(walk$date, format="%m/%d/%Y"))
+walk <- cbind(walk, weekday)
+walk$date <- as.character(walk$date)
+walk$weekday <- as.character(walk$weekday)
 
+sortweekdays <- function(x){
+     x <- replace(x, !(x %in% c("Saturday", "Sunday")), "Weekdays")
+     x <- replace(x, x %in% c("Saturday", "Sunday"), "Weekend")
+     }
+walk$weekday <- sortweekdays(walk$weekday)
 
-## What is the average daily activity pattern?
+summaryTable  <- ddply(walk, c("date"), summarize,
+     total=sum(steps, na.rm=T),
+     average=round(sum(steps, na.rm=T)/length(steps)),
+     median=median(steps, na.rm=T))
+     
+g <- ggplot(summaryTable, aes(total)) + 
+     geom_histogram(binwidth=2000, fill="steelblue", col="red")
+g <- g + ggtitle("Histogram of Total Steps per Day") +
+  xlab("Total Steps") + ylab("Frequency")
+print(g)
+```
 
+```{r summaryTable}
+print(summaryTable, type="html")
+```
 
+### 2.  Pattern of Average Walkign Activity 
 
-## Imputing missing values
+- Does this individual's walking activity show any kind of pattern?  
+1.  Split the "activity (walk)" dataset by the "interval" variable
+2.  Calculate the average steps for each 5-minute intervals
 
+- **Time-series plot** showing the average steps per intervals 
 
+```{r timeseries, fig.height=4}
+## new data frame "stepPerInterval" splitted by "interval"
+stepsPerInterval <- ddply(walk, .(interval), summarize, 
+     average=mean(steps, na.rm=T))
+g <- ggplot(stepsPerInterval, aes(interval, average)) + geom_line()
+g <- g + ggtitle("Avergae Steps per Interval") +
+     xlab("Interval") + ylab("Average Steps")
 
-## Are there differences in activity patterns between weekdays and weekends?
+maxStep <- max(stepsPerInterval$average, na.rm=T)
+maxInterval <- 
+     stepsPerInterval$interval[stepsPerInterval$average==maxStep]
+g <- g + geom_text(aes(maxInterval, maxStep), label=maxInterval, 
+      color="red")
+print(g)
+```
+
+#### This time series plot shows that this invidual's maximum walking activity is at the **`r maxInterval`th interval**.  
+
+### 3.  Missing Data Imputation 
+```{r naCount, fig.height=4}
+naCount <- sum(is.na(walk$steps))
+```
+- The "activity" data set has total **`r naCount`** missing values in the "steps" variable.  
+- The missing values were discrded in the above analyses.  
+- This process resulted in a very unlikely outcome 
+(For example 8 days with zero ealking activity)
+
+**Imputation method**
+- Split by "weekday"
+- Split by "interval"
+- Calculate the means per interval
+- Replace NAs with the means of the corresponding intervals 
+
+**I used ddply() function of the *plyr* package to split the data.  The replacena() function is introduced to replace na's**
+
+```{r imputation, fig.height=4}
+replacena <- function(x) {
+      replace(x, is.na(x), round(mean(x, na.rm=T)))
+      }
+
+imputedwalk <- ddply(walk, c("weekday", "interval"), transform, 
+     steps=replacena(steps))
+imputedwalk <- imputedwalk[order(as.Date(imputedwalk$date), 
+     imputedwalk$interval), ]
+
+summaryTable1  <- ddply(imputedwalk, c("date"), summarize,
+     total=sum(steps, na.rm=T),
+     average=round(mean(steps, na.rm=T)),
+     median=median(steps, na.rm=T))
+```
+- The resulting **histogram** and **Summary Table** are shown below.  
+- The number of days with < 2,000 steps went down from 10 to 2 days   
+- A noticeable change in the summary rable is in the median value.
+
+```{r histogram2, fig.height=4} 
+h <- ggplot(summaryTable1, aes(total)) + 
+     geom_histogram(binwidth=2000, fill="steelblue", col="red")
+h <- h + ggtitle("Histogram of Total Steps per Day (Imputed)") +
+  xlab("Total Steps") + ylab("Frequency")
+print(h)
+```
+```{r summaryTable1}
+print(summaryTable1, type="html")
+```
+
+### 4.  Comparison of Activity Patterns between Weekdays and Weekends
+
+```{r timeseries2, fig.height=6}
+## new data frame "stepPerInterval" splitted by "interval"
+stepsPerInterval2 <- ddply(imputedwalk, .(weekday,interval), summarize,
+     average=mean(steps, na.rm=T))
+f <- ggplot(stepsPerInterval2, aes(interval, average)) + geom_line()
+f <- f + facet_grid(weekday~.)
+f <- f + ggtitle("Avergae Steps per Interval (imputed)") +
+     xlab("Interval") + ylab("Average Steps")
+print(f)
+```

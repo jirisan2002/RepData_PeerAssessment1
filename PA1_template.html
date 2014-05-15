@@ -188,33 +188,15 @@ library(xtable)
 
 <h1>Analyses of Daily Walking Activity of an Anonymous Individual</h1>
 
-<h3>Study Summary</h3>
+<p>Small portable devices can be used to monitor and collect data on personal activites.  An individual&#39;s daily walking activity was monitored and collected using such a device, during the two month-period of October and November of 2012.  The number of steps per every 5-minute interval per day was monitored and collected.    </p>
 
-<ul>
-<li>Use of small portable devices to collect data on personal activites</li>
-<li>An individual&#39;s daily activity was monitored by counting the number of steps per every 5-minute interval per day</li>
-</ul>
-
-<h3>Goals of the Study</h3>
-
-<ol>
-<li> To manipulate this dataset to extract, summarize and present the statiscal summaries that are appropriate to our study questions.</li>
-<li> To integrate the manipulation processes and the resulting summaries in an R markdown file to generate a document that complies lierate statistcal programming.<br/></li>
-</ol>
+<p>The purposes of this project are (1) to manipulate this dataset to extract, summarize and present the statiscal summaries that are appropriate to our study questions, and furthermore (2) to integrate the manipulation processes and the resulting summaries in an R markdown file in a way to generate a document that colplies lierate statistcal programming.   </p>
 
 <h3>1.  Mean Total Number of Steps per Day</h3>
 
-<ul>
-<li>Import the data and name it &ldquo;walk&rdquo; </li>
-<li>Add a new variable &ldquo;weekday&rdquo; (weekdays or weekend) based on the date. </li>
-</ul>
+<p>The first thing to do is to load the data set (&ldquo;activity.csv&rdquo;) and process the data for further analyses.  I imported the data and named it &ldquo;walk&rdquo; and added a new variable &ldquo;weekday&rdquo; for based on the date.  The &ldquo;weekday&rdquo; variable&quot; would be useful for the later parts of this project.</p>
 
-<p><strong>Generation of histogram and summary table</strong></p>
-
-<ul>
-<li><strong>histogram</strong> showing the distribution of total daily steps</li>
-<li><strong>table</strong> summarizing the daily walking activities</li>
-</ul>
+<p>To generate a <strong>histogram</strong> showing the distribution of total daily steps taken and a <strong>table</strong> summarizing the daily walking activities of the individual, I generated a new data frame <strong>&ldquo;summaryTable&rdquo;</strong>.  </p>
 
 <pre><code class="r"># read the data frame &#39;activity.csv&#39; in the working directory
 walk &lt;- read.csv(&quot;activity.csv&quot;)
@@ -243,6 +225,8 @@ print(g)
 </code></pre>
 
 <p><img src="data:image/png;base64,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" alt="plot of chunk histogram"/> </p>
+
+<p>Here is the <strong>Summary Table</strong> showing the total steps, average steps per interval and medians per interval per day</p>
 
 <pre><code class="r">print(summaryTable, type = &quot;html&quot;)
 </code></pre>
@@ -313,12 +297,7 @@ print(g)
 
 <h3>2.  Pattern of Average Walkign Activity</h3>
 
-<ul>
-<li>Does this individual&#39;s walking activity show any kind of pattern?<br/></li>
-<li> Split the &ldquo;activity (walk)&rdquo; dataset by the &ldquo;interval&rdquo; variable</li>
-<li><p>Calculate the average steps for each 5-minute intervals</p></li>
-<li><p><strong>Time-series plot</strong> showing the average steps per intervals </p></li>
-</ul>
+<p>The next question is whether this individual&#39;s walking activity shows any kind of pattern, i.e. whether it shows a daily cycle of high and low activities.  To accomplish this, the &ldquo;activity (walk)&rdquo; dataset was split by the &ldquo;interval&rdquo; variable and the average steps for each 5-minute time intervals were calculated.  The following figure shows the time-series plot of average steps taken. </p>
 
 <pre><code class="r">## new data frame &#39;stepPerInterval&#39; splitted by &#39;interval&#39;
 stepsPerInterval &lt;- ddply(walk, .(interval), summarize, average = mean(steps, 
@@ -341,23 +320,9 @@ print(g)
 <pre><code class="r">naCount &lt;- sum(is.na(walk$steps))
 </code></pre>
 
-<ul>
-<li>The &ldquo;activity&rdquo; data set has total <strong>2304</strong> missing values in the &ldquo;steps&rdquo; variable.<br/></li>
-<li>The missing values were discrded in the above analyses.<br/></li>
-<li>This process resulted in a very unlikely outcome 
-(For example 8 days with zero ealking activity)</li>
-</ul>
+<p>The &ldquo;activity&rdquo;&ldquo; data set has total <strong>2304</strong> missing values in the &quot;steps&rdquo; variable.  These missing values were discrded in the above analyses.  This process resulted in a very unlikely outcome of having 8 days of no walking day (i.e. zero total steps, see the table above).  </p>
 
-<p><strong>Imputation method</strong></p>
-
-<ul>
-<li>Split by &ldquo;weekday&rdquo;</li>
-<li>Split by &ldquo;interval&rdquo;</li>
-<li>Calculate the means per interval</li>
-<li>Replace NAs with the means of the corresponding intervals </li>
-</ul>
-
-<p><strong>I used ddply() function of the <em>plyr</em> package to split the data.  The replacena() function is introduced to replace na&#39;s</strong></p>
+<p>Assuming some degree of repeating patterns of personal activities based on working (weekdays)-nonworking (weekend) days and individual circadian cycle, my approach to resolve this issue is to replace the missing values with the average steps of each time interval after splitting the days to weekdays and weekends.  I used ddply() function of the <em>plyr</em> package to split the data.  The replacena() function is introduced to replace na&#39;s with the mean steps of corresponding intervals of a day (weekday or weekend separatley).  </p>
 
 <pre><code class="r">replacena &lt;- function(x) {
     replace(x, is.na(x), round(mean(x, na.rm = T)))
@@ -372,11 +337,9 @@ summaryTable1 &lt;- ddply(imputedwalk, c(&quot;date&quot;), summarize, total = s
     na.rm = T))
 </code></pre>
 
-<ul>
-<li>The resulting <strong>histogram</strong> and <strong>Summary Table</strong> are shown below.<br/></li>
-<li>The number of days with &lt; 2,000 steps went down from 10 to 2 days<br/></li>
-<li>A noticeable change in the summary rable is in the median value.</li>
-</ul>
+<p>The resulting <strong>histogram</strong> and Here is a modified <strong>Summary Table</strong> are shown below.  The number of days with less than 2,000 steps went down from 10 days to 2 days after changing the data.  </p>
+
+<p>A noticeable change in the summary rable is in the median value.  The median steps were either 0 (for the days with at least one record for &ldquo;steps&rdquo;) or NA (days with no record for &ldquo;steps&rdquo; variable).  However, the median values on the NA days were switched to non-zero values.</p>
 
 <pre><code class="r">h &lt;- ggplot(summaryTable1, aes(total)) + geom_histogram(binwidth = 2000, fill = &quot;steelblue&quot;, 
     col = &quot;red&quot;)
